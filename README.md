@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a demo program for ruby on rails.
 
-Things you may want to cover:
+## Resources:
 
-* Ruby version
+**Rooms**:
 
-* System dependencies
+1. id:integer (auto-generated)
+2. address:string
+3. price:integer
+4. beds:integer
+5. square:integer
+6. assigned:boolean
+   (not added due to lack data source: image:string; overview:text).
 
-* Configuration
+**Guests**:
 
-* Database creation
+1. id:integer (auto-generated)
+2. first_name:string
+3. last_name:string
+4. email:string
+5. phone:string
+6. status:integer (related to room's id and assigned)
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Use Devise for Identity Management.

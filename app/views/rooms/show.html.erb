@@ -1,0 +1,28 @@
+<div class="card" style="width: 70%;">
+  <img src="..." class="card-img-top" alt="No Display Now">
+  <div class="card-body">
+    <h5 class="card-title">Room ID: <%= @room.id %></h5>
+    <p class="card-text">
+      <strong>Address:</strong>
+      <%= @room.address %>
+    </p>
+    <p class="card-text">
+      <strong>Price:</strong>
+      <%= @room.price %> |
+      <strong>Beds:</strong>
+      <%= @room.beds %>  |
+      <strong>Square:</strong>
+      <%= @room.square %> |
+      <strong>Assigned:</strong>
+      <% if @room.assigned %>
+          <td>Full</td>
+      <% else %>
+          <td>Empty</td>
+      <% end %>
+    </p>
+    <%= link_to 'Edit', edit_room_path(@room), class:"btn btn-secondary" %> 
+    <%= link_to 'Back', rooms_path, class:"btn btn-secondary" %>
+  </div>
+</div>
+
+

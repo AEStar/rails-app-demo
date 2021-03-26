@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <%= link_to 'Month3Month', root_path, class:"navbar-brand"%>
+  <%# <a class="navbar-brand" href="#">Month3Month</a> %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to 'Room', rooms_path, class:"nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Guest', guests_path, class:"nav-link"%>
+        </li>
+      <% end %>
+    </ul>
+    <ul class="navbar-nav mr-left">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class:"nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Profile', edit_user_registration_path, class:"btn btn-outline-light my-2 my-sm-0"%>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to 'Register', new_user_registration_path, class:"nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Sign In', new_user_session_path, class:"nav-link"%>
+        </li>
+      <% end %>
+      
+    </ul>
+  </div>
+</nav>

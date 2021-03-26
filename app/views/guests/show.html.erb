@@ -1,0 +1,26 @@
+<div class="jumbotron">
+  <h1 class="display-4">
+    <%= @guest.first_name %>
+    <%= @guest.last_name %>
+  </h1>
+  <p class="lead font-italic">
+    <strong>Email:</strong>
+    <%= @guest.email %>
+  </p>
+  <hr class="my-6">
+  <p class="lead font-italic">
+    <strong>Phone:</strong>
+    <%= @guest.phone %>
+  </p>
+  <hr class="my-6">
+  <p class="lead font-italic">
+    <strong>Status:</strong>
+    <%= @guest.status %>
+  </p>
+  <hr class="my-6">
+  <%= link_to 'Edit', edit_guest_path(@guest), class:"btn btn-secondary" %>
+  <%= link_to 'Back', guests_path, class:"btn btn-secondary" %>
+</div>
+
+
+
