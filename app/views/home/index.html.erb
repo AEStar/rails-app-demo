@@ -1,5 +1,23 @@
 <% if user_signed_in? %>
-    <h1>This is an index page</h1>
+    <h1>Welcome to Month3Month! <%= current_user.email %></h1>
 <% else %>
     <h1>Please Sign in before managing the system</h1>
 <% end %>
+<br/>
+<div class="card">
+  <h5 class="card-header">Available Rooms</h5>
+  <div class="card-body">
+    <% if Room.all.count != 0 %>
+      <%  Room.all.each do |room| %>
+          <% if !room.assigned %>
+              <h5 class="card-title font-italic"><%= room.address %></h5>
+              <p class="card-text"> <%= room.price %>$ | <%= room.beds %> beds | <%= room.square %> sq ft</p>
+              <%= link_to 'Go to reserve with id %d!' % room.id, guests_path, class:"btn-sm btn-primary"%>
+              <br/><br/>
+          <% end %>
+      <% end %>
+    <% else %>
+      <p>No room is available now, you can add it <%= link_to 'clicking here', rooms_path%></p>
+    <% end %>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 # README
 
-This is a demo program for ruby on rails.
+This is a demo program for ruby on rails. Please log in at first. Otherwise, you cannot do operations to the PMS even though you know routes.
 
 ## Resources:
 
@@ -21,6 +21,6 @@ This is a demo program for ruby on rails.
 3. last_name:string
 4. email:string
 5. phone:string
-6. status:integer (related to room's id and assigned)
+6. status:integer (reserved room id, if do not reserve any room, default value is -1.)
 
 ### Use Devise for Identity Management.

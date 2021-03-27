@@ -1,5 +1,7 @@
 class GuestsController < ApplicationController
   before_action :set_guest, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  after_action :room_status_change, only: [ :update ]
 
   # GET /guests or /guests.json
   def index
@@ -36,6 +38,8 @@ class GuestsController < ApplicationController
 
   # PATCH/PUT /guests/1 or /guests/1.json
   def update
+    @room = Room.find_by(id: @guest.status)
+
     respond_to do |format|
       if @guest.update(guest_params)
         format.html { redirect_to @guest, notice: "Guest was successfully updated." }
@@ -54,6 +58,24 @@ class GuestsController < ApplicationController
       format.html { redirect_to guests_url, notice: "Guest was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def room_status_change
+
+    if @room.nil?
+      @guest.status = -1
+      @guest.save
+      flash[:notice] = "No Such Room!"
+      return
+    end
+    
+    if(@guest.status == -1)
+      @room.assigned = false
+    else
+      @room.assigned = true
+    end
+    
+    @room.save
   end
 
   private
