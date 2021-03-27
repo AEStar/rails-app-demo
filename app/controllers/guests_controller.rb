@@ -1,7 +1,8 @@
 class GuestsController < ApplicationController
   before_action :set_guest, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
-  after_action :room_status_change, only: [ :update ]
+  after_action :room_status_change, only: %i[ create update ]
+  after_action :room_cancel, only: %i[ destroy ]
 
   # GET /guests or /guests.json
   def index
@@ -38,7 +39,7 @@ class GuestsController < ApplicationController
 
   # PATCH/PUT /guests/1 or /guests/1.json
   def update
-    @room = Room.find_by(id: @guest.status)
+    @temp_status = @guest.status
 
     respond_to do |format|
       if @guest.update(guest_params)
@@ -53,6 +54,8 @@ class GuestsController < ApplicationController
 
   # DELETE /guests/1 or /guests/1.json
   def destroy
+    @cancel_status = @guest.status
+
     @guest.destroy
     respond_to do |format|
       format.html { redirect_to guests_url, notice: "Guest was successfully destroyed." }
@@ -61,23 +64,59 @@ class GuestsController < ApplicationController
   end
 
   def room_status_change
+    # no change
+    if @guest.status == @temp_status
+      return
+    end
 
+    # create a new guest
+    if @temp_status.nil? && @guest.status == -1
+      return
+    end
+
+    @temp = Room.find_by(id: @temp_status)
+
+    # cancel reserve
+    if @guest.status == -1
+      @room = @temp
+      @room.assigned = false
+      @room.save
+      return
+    end
+
+    @room = Room.find_by(id: @guest.status)
+    # no such room
     if @room.nil?
-      @guest.status = -1
+      @guest.status = @temp_status
       @guest.save
       flash[:notice] = "No Such Room!"
       return
     end
-    
-    if(@guest.status == -1)
-      @room.assigned = false
-    else
-      @room.assigned = true
+    # has been reserved
+    if @room.assigned
+      @guest.status = @temp_status
+      @guest.save
+      flash[:notice] = "This room has been reserved!"
+      return
     end
-    
+    # reserve successfully
+    if !@temp.nil?
+      @temp.assigned = false
+      @temp.save
+    end
+    @room.assigned = true
     @room.save
   end
 
+  def room_cancel
+    if @cancel_status == -1
+      return
+    end
+
+    @room = Room.find_by(id: @cancel_status)
+    @room.assigned = false
+    @room.save
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_guest

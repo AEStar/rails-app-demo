@@ -2,6 +2,8 @@
 
 This is a demo program for ruby on rails. Please log in at first. Otherwise, you cannot do operations to the PMS even though you know routes.
 
+The reservation system is designed as one guest to one room. You can reserve or change room by editing the status of the guest. Once the guest is removed, its reserved room will be cancelled automatically. By the way, you cannot change the assigned state of a room directly.
+
 ## Resources:
 
 **Rooms**:

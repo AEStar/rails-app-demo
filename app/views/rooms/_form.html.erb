@@ -31,9 +31,9 @@
     <%= form.number_field :square, class:"form-control" %>
   </div>
 
-  <div class="field form-group">
+  <div class="field form-group" style="display: none;">
     <%= form.label :assigned %>
-    <%= form.check_box :assigned %>
+    <%= form.check_box :assigned, type: :hidden%>
   </div>
 
   <div class="actions">
